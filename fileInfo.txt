@@ -1,0 +1,249 @@
+'use client'
+
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css';
+import 'swiper/css/navigation';
+import {  Navigation } from 'swiper/modules'
+
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import { useState } from "react";
+
+import {
+  PiArrowArcLeft,
+  PiArrowArcRight,
+  PiFacebookLogo,
+  PiLinkedinLogo,
+  PiTwitterLogo,
+} from "react-icons/pi";
+import Link from "next/link";
+
+
+const founders = [
+    {
+      name: "Eric Röstlund",
+      role: "Analyst - Corporate Strategy & Operations",
+      image: img10.src,
+      description:
+        "Eric supports Realty’s financial and operational activities as well as its corporate strategic initiatives. He has prior experience working at leading Scandinavian bank Handelsbanken, working as a financial advisor for high net worth individuals. He led a team of analysts that monitored client portfolios and offered strategic investment advice. Eric graduated with a first class degree in Finance from the University of Tampa.",
+       linkedin: "https://linkedin.com",
+       twitter: "https://twitter.com",
+       facebook: "https://facebook.com"
+    },
+  ];
+
+const firstRow = founders.slice(0, founders.length);
+
+const FounderCard = ({
+  name,
+  role,
+  image,
+  linkedin,
+  twitter,
+  facebook,
+  onClick,
+}:{
+    name: string,
+    role: string,
+    image: string,
+    linkedin: string,
+    twitter: string,
+    facebook: string,
+    onClick: () => void;
+  }) => {
+    return(
+      <motion.div
+        className="md:mb-0 mb-8"
+      >
+        <div className="bg-gray-100 aspect-square mb-4 overflow-hidden">
+          <Image
+            priority
+            width={500}
+            height={500}
+            src={image}
+            alt={name}
+            onClick={onClick}
+            className="w-full h-full object-cover cursor-pointer"
+          />
+        </div>
+        <h3 className="font-bold text-[14px] md:text-lg tracking-wide mb-1">{name.slice(0, 21)}</h3>
+        <p className="text-white/80 font-semibold text-[13px] md:text-[15px] mb-2">{role.slice(0, 20)}...</p>
+        <div className="flex gap-4">
+          <motion.div
+            whileHover={{ scale: 1.15 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            <Link href={linkedin} >
+              <PiLinkedinLogo className="w-5 h-5 text-white/80 hover:text-white cursor-pointer" />
+            </Link>
+            
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.15 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            <Link href={twitter}>
+              <PiTwitterLogo className="w-5 h-5 text-white/80 hover:text-white cursor-pointer" />
+            </Link>
+            
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.15 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            <Link href={facebook}>
+              <PiFacebookLogo className="w-5 h-5 text-white/80 hover:text-white cursor-pointer" />
+            </Link>
+            
+          </motion.div>
+              
+        </div>
+      </motion.div>
+    )
+  }
+
+const MemberDetails = ({
+    founder,
+    onClose,
+  }: {
+    founder: (typeof founders)[0];
+    onClose: () => void;
+  }) => {
+    return (
+      <motion.div
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
+        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+        className="fixed right-0 border-l border-white/20 top-0 h-full md:w-2/5 bg-black shadow-lg p-6 z-50 cursor-pointer overflow-y-scroll [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-black"
+      >
+       
+        <div className="">
+          <div className="flex gap-3">
+            
+            <div className="cursor-auto flex flex-col gap-y-2 mt-5 ">
+              
+              <p className="mt-3 cursor-auto text-white/80 max-w items-center rounded-full font-semibold transition-all text-[14px]">{founder.role}</p>
+              <h2 className="text-[17px] tracking-wider font-semibold">{founder.name}</h2>
+              {/* <h2 className="text-[17px] font-semibold text-white/90 tracking-wider">Social links</h2> */}
+              <div className="cursor-pointer flex gap-2">
+              <Link href={founder.linkedin} >
+                <PiLinkedinLogo className="w-5 h-5 text-white/80 hover:text-white cursor-pointer" />
+              </Link>
+              <Link href={founder.twitter}>
+                <PiTwitterLogo className="w-5 h-5 text-white/80 hover:text-white cursor-pointer" />
+              </Link>
+              <Link href={founder.facebook}>
+                <PiFacebookLogo className="w-5 h-5 text-white/80 hover:text-white cursor-pointer" />
+              </Link>
+              </div>
+            </div>
+          </div>
+  
+          <div className="cursor-auto pt-3">
+            {/* <h3 className="font-semibold text-lg">About</h3> */}
+            <p className="text-white/80 text-[14px] leading-6 md:text-[17px] tracking-wide font-[600] ">
+            {founder.description}
+            </p>
+          </div>
+
+          
+          <button 
+              onClick={onClose}
+              className="text-white/50 tracking-wider hover:text-white/65 border-[0.5px] border-zinc-50/10 text-[15px] md:text-[16px] hover:border-white/25 py-[7px] rounded-md font-medium mt-5 w-full mb-12 transition-all duration-100"
+          >
+              Close    
+          </button>
+        </div>
+      </motion.div>
+    );
+  };
+
+
+const TeamCarousel = () => {
+  const [selectedFounder, setSelectedFounder] = useState<
+              (typeof founders)[0] | null
+            >(null);
+
+  return (
+    <section className='mb-10 w-full py-16 md:mx-0 2xl:w-4/5 md:px-0'>
+      <div className="flex justify-between items-center mb-12">
+        <div>
+          <h2 className="text-3xl font-bold mb-2">
+            Meet the team
+          </h2>
+          <p className="text-[14px] md:text-[18px] tracking-wide font-semibold text-white/80">
+            Meet the passionate investment professionals behind realty corp.
+          </p>
+          </div>
+          <div className="hidden md:flex gap-2">
+            <motion.button>
+              <PiArrowArcLeft className="prev text-white/45 border rounded-full flex items-center justify-center text-4xl p-2 hover:text-white transition-colors outline-none" />
+            </motion.button>
+            <motion.button>
+              <PiArrowArcRight className="next text-white/45 border rounded-full flex items-center justify-center text-4xl p-2 hover:text-white transition-colors outline-none" />
+            </motion.button>
+          </div>
+        </div>
+    
+      <div className="relative max-w-full overflow-hidden">
+        <Swiper slidesPerView={1} 
+          spaceBetween={20}
+          navigation={{
+            prevEl: '.prev',
+            nextEl: '.next',
+          }}
+          breakpoints={{
+            320: { slidesPerView: 2 },
+            640: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            1024:{ slidesPerView: 4 },
+            1310:{ slidesPerView: 4 },
+          }} 
+          modules={[Navigation]}
+        >
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+            {firstRow.map((review, index) => (
+              <SwiperSlide key={index}>
+                <FounderCard
+                  key={index}
+                  {...review}
+                  onClick={() => setSelectedFounder(review)}
+              />
+              </SwiperSlide>
+            ))}
+          </div>
+        </Swiper>
+      </div>
+
+      <div className="flex justify-end md:hidden gap-2">
+        <motion.button>
+          <PiArrowArcLeft className="prev text-white/45 border rounded-full flex items-center justify-center text-4xl p-2 hover:text-white transition-colors outline-none" />
+        </motion.button>
+        <motion.button>
+          <PiArrowArcRight className="next text-white/45 border rounded-full flex items-center justify-center text-4xl p-2 hover:text-white transition-colors outline-none" />
+        </motion.button>
+      </div>
+              
+      <AnimatePresence>
+        {selectedFounder && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black z-40"
+              onClick={() => setSelectedFounder(null)}
+            />
+              <MemberDetails
+                founder={selectedFounder}
+                onClose={() => setSelectedFounder(null)}
+              />
+          </>
+        )}
+      </AnimatePresence>
+    </section>
+  )
+}
+
+export default TeamCarousel
