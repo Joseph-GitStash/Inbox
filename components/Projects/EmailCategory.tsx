@@ -21,7 +21,7 @@ import Tray from './Tray';
 import CategoryList from './CategoryList';
 
 
-const categories = [
+export const categories = [
   {
     id: 1,
     name: "primary",

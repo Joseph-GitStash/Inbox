@@ -58,10 +58,10 @@ const EmailDetails = ({
 
 
 const CategoryList = ({
-    email,
+    email ,
     wrapper,
 }:{
-  email: emails;
+  email: (typeof emails)[0];
   wrapper: RefObject<null>;
 }) => {
     const [selectedEmail, setSelectedEmail] = useState<
@@ -70,7 +70,7 @@ const CategoryList = ({
 
 
   return (
-    <section>
+    <section suppressHydrationWarning>
 
     <Reorder.Item 
         value={email}
