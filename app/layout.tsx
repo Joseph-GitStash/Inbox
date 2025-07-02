@@ -10,9 +10,9 @@ const archivo = Archivo({
 })
 
 export const metadata: Metadata = {
-  title: "Practice Projects",
-  description: "Small practice projects",
-  keywords: ["Frontend practice projects"]
+  title: "Inbox App",
+  description: "Inbox is a secure online platform for sending and recieving electronic messages, it is a free to use, web-based email service accessible through web browsers",
+  keywords: ["Inbox, Inbox app, mail, messaging, email"]
 };
 
 export default function RootLayout({
