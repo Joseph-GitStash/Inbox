@@ -12,25 +12,58 @@ import {
   UserRound,
   X,
 } from "lucide-react";
-import { AnimatePresence, motion, Reorder, useDragControls } from 'framer-motion';
+import { AnimatePresence, motion, Reorder, useDragControls, useMotionValue } from 'framer-motion';
 import { RefObject, useState } from "react";
 
 const EmailDetails = ({
   getEmails,
   onClose,
+  closeTray,
 }: {
   getEmails: (typeof emails)[0];
   onClose: () => void;
+  closeTray: () => void
 }) => {
+   const controls = useDragControls()
+   const dragY = useMotionValue(0)
+
     return(
       
-      <motion.div
-        initial={{ y: "-100%" }}
+      <motion.div 
+        className="absolute bottom-0 inset-x-0 mx-auto w-full sm:w-[22rem] min-h-10 bg-white px-8 pb-6 shadow-lg p-6 cursor-pointer overflow-hidden rounded-t-md z-10"
+        initial={{ y: "100%" }}
         animate={{ y: 0 }}
-        exit={{ y: "-100%" }}
+        exit={{ y: "100%" }}
         transition={{ type: "spring", damping: 25, stiffness: 200, duration: 0.2, ease: 'easeIn' }}
-        className="absolute inset-0 m-auto w-[22rem] h-[22rem] bg-white px-8 pb-6 border-l border-white/20 shadow-lg p-6 cursor-pointer overflow-hidden rounded-md z-10"
+        layout
+        drag='y'
+        dragControls={controls}
+        dragConstraints={{
+          top: 0,
+          bottom: 0,
+        }}
+        dragElastic={{
+          top: 0,
+          bottom: 0.5,
+        }}
+        onDragEnd={() => {
+          if(dragY.get() >= 100){
+            closeTray()
+          }
+        }}
+        
       >
+        <button className='mb-7 -mt-2 mx-auto flex justify-center'>
+          <motion.div 
+            className="h-2 w-14 cursor-grab bg-gray-200 touch-none  "
+            style={{ borderRadius: 100 }}      
+            key="drag-bar"
+            layout
+            onPointerDown={(e) => {
+            controls.start(e)
+            } }
+          />
+        </button>
         <div className="flex gap-2 items-center">
         <h1 className='tracking-tighter text-xl text-black'>
          <span className="text-lg">From </span> {getEmails.sender}
@@ -67,6 +100,8 @@ const CategoryList = ({
     const [selectedEmail, setSelectedEmail] = useState<
                   (typeof emails)[0] | null
                 >(null);
+      const [trayOpen, setTrayOpen] = useState(false);
+    
 
 
   return (
@@ -93,22 +128,26 @@ const CategoryList = ({
     </Reorder.Item>
     
         {selectedEmail && (
-            <AnimatePresence>
+          <>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-black "
+                className="absolute h-full inset-0 bg-black "
                   onClick={() => setSelectedEmail(null)}
                   layout
-                />
-                  <EmailDetails
+              ></motion.div>
+
+              <AnimatePresence>
+                <EmailDetails
                     getEmails={selectedEmail}
                     onClose={() => setSelectedEmail(null)}
                     key={email.id}
-                  />
+                    closeTray={() => setTrayOpen(false)}
+                />
+              </AnimatePresence>
+          </>
                 
-            </AnimatePresence>
         )}
     </section>
   )

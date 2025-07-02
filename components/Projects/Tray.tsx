@@ -3,7 +3,7 @@ import React, { ReactNode, useState } from 'react'
 import { AnimatePresence, motion, useDragControls, useMotionValue } from 'framer-motion';
 import { About, BackUp, KeyReveal, OptionsMenu, PhraseKey, PrivateKey, RecoveryPhrase, RemoveEmails, RemoveWallet } from './Tray-Content';
 
-interface TrayProps {
+export interface TrayProps {
   closeTray: () => void
 }
 
@@ -27,14 +27,14 @@ const Tray = ({ closeTray }: TrayProps) => {
 
   return (
     <>
-      <motion.div className="absolute inset-0 bg-black"
+      <motion.div className="absolute h-full inset-0 bg-black"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.5 }}
         exit={{ opacity: 0 }}
         onClick={closeTray}
       ></motion.div>
-      <motion.div className="absolute bottom-0 inset-x-0 mx-auto w-[22rem] min-h-10 bg-white px-8 mb-6 pb-6 overflow-hidden"
-        style={{ borderRadius: 7, y: dragY }}
+      <motion.div className="absolute bottom-0 inset-x-0 mx-auto w-full sm:w-[22rem] min-h-10 bg-white px-8 pb-6 overflow-hidden z-10"
+        style={{ borderTopLeftRadius: 7, borderTopRightRadius: 7, y: dragY }}
         initial={{ y: "100%" }}
         animate={{ y: 0 }}
         exit={{ y: "100%" }}
