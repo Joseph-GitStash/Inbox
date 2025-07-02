@@ -97,15 +97,21 @@ const CategoryList = ({
   email: (typeof emails)[0];
   wrapper: RefObject<null>;
 }) => {
+  
     const [selectedEmail, setSelectedEmail] = useState<
                   (typeof emails)[0] | null
                 >(null);
       const [trayOpen, setTrayOpen] = useState(false);
-    
+      const closeAll = ()=>{
+        setSelectedEmail(null)
+        setTrayOpen(false)
+      }
 
 
   return (
     <section suppressHydrationWarning>
+
+
 
     <Reorder.Item 
         value={email}
@@ -120,15 +126,14 @@ const CategoryList = ({
             <h3 className='tracking-tighter'>{email.subject}</h3>
             <p className="text-sm tracking-tight font-semibold">{email.description}</p>
             </div>
-            <div>
-                <LucideSquareArrowOutUpRight className='cursor-pointer' onClick={() => setSelectedEmail(email)} 
-            />
-        </div>
+            {/* <div>
+                <LucideSquareArrowOutUpRight className='cursor-pointer' onClick={() => setSelectedEmail(email)} />
+        </div> */}
                           
     </Reorder.Item>
     
         {selectedEmail && (
-          <>
+          <AnimatePresence>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
@@ -138,15 +143,13 @@ const CategoryList = ({
                   layout
               ></motion.div>
 
-              <AnimatePresence>
                 <EmailDetails
                     getEmails={selectedEmail}
                     onClose={() => setSelectedEmail(null)}
                     key={email.id}
                     closeTray={() => setTrayOpen(false)}
                 />
-              </AnimatePresence>
-          </>
+          </AnimatePresence>
                 
         )}
     </section>
