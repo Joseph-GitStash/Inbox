@@ -43,7 +43,7 @@ const Faqs = () => {
                 once: false
               }}
         className="container">
-          <h1 className="text-4xl font-thin md:text-5xl tracking-tighter text-center mb-3 ">
+          <h1 className="text-4xl md:text-5xl tracking-tighter text-center mb-3 ">
             <span className=" ">Questions</span>{" "}
             <span className="">&</span>{" "}
             <span className="text-[#007aff]">Answers</span>
