@@ -87,19 +87,6 @@ const EmailCategory = () => {
       // initial={{ opacity: 0, y: 100 }}
     >
         <motion.div 
-          initial={{ opacity: 0, y: 150 }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                transition:{
-                  duration: 0.8,
-                  ease:[0.44, 0, 0, 1],
-                },
-              }}
-              viewport={{
-                amount: "some",
-                once: false
-              }}
           className="relative bg-neutral-900 overflow-hidden emailLayout border border-white/10 rounded-lg">
         <div className="absolute hidden -z-10 inset-0 bg-[#00000061]"></div>
         {/* <AnimatePresence>
