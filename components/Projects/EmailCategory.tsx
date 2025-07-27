@@ -104,7 +104,7 @@ const EmailCategory = () => {
                     // onClick={() => setTrayOpen(true)} 
                   />  
                 </div>
-                <motion.div className={`${isWidth && "hidden"}items-center flex max-w-fit gap-2 md:gap-4 `} layout>
+                <motion.div className={`hidden items-center sm:flex max-w-fit gap-2 md:gap-4 `} layout>
                   {categories.map((category) => (
                     <CategoryBadge 
                       isActive={activeCategory === category.name}
@@ -116,7 +116,7 @@ const EmailCategory = () => {
                       key={category.name}
                       
                     >
-                      <motion.div layout className="items-center size-5">{category.icon}</motion.div>
+                      <motion.div layout className="items-center">{category.icon}</motion.div>
                       <motion.span data-slot='label' className="text-[12px] md:text-sm tracking-tight font-semibold">{category.displayName}</motion.span>
                     </CategoryBadge>
                   ))}
