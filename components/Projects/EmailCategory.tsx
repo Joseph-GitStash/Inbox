@@ -61,7 +61,7 @@ const EmailCategory = () => {
   const wrapper = useRef(null)
 
   const isWidth = useMediaQuery({
-    query: "(max-width: 320px)"
+    query: "(width: 320px)"
   })
 
   const [activeCategory, setActiveCategory] = useState("primary")
@@ -104,7 +104,7 @@ const EmailCategory = () => {
                     // onClick={() => setTrayOpen(true)} 
                   />  
                 </div>
-                <motion.div className={`${isWidth && "hidden"} max-w-fit flex gap-2 md:gap-4 `} layout>
+                <motion.div className={`${isWidth && "hidden"}items-center flex max-w-fit gap-2 md:gap-4 `} layout>
                   {categories.map((category) => (
                     <CategoryBadge 
                       isActive={activeCategory === category.name}
@@ -116,7 +116,7 @@ const EmailCategory = () => {
                       key={category.name}
                       
                     >
-                      <motion.div layout className="size-5">{category.icon}</motion.div>
+                      <motion.div layout className="items-center size-5">{category.icon}</motion.div>
                       <motion.span data-slot='label' className="text-[12px] md:text-sm tracking-tight font-semibold">{category.displayName}</motion.span>
                     </CategoryBadge>
                   ))}
