@@ -4,14 +4,13 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #4141413c;
-/* #413f3f5e opacity-[0.8784] #e2e2e2 #200D42_34%,#4F21A1_65%,#A46EDB */
-  color: #000;
+  background-color: #000;
+  color: #fff;
   min-height: 100vh;
 }
 
  .line{
-    @apply overflow-hidden text-[#746a85] bg-[#4F21A1] border-[#A46EDB]
+    @apply overflow-hidden bg-neutral-800 
   }
 
   .word{
@@ -25,59 +24,10 @@ body {
 
 
 @layer utilities {
-  .layoutSect{
-    @apply 2xl:max-w-screen-xl lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[640px] max-w-[1024px] mx-auto px-[20px] flex flex-col pt-[3rem] md:pt-[6rem]
+  .emailLayout{
+    @apply 2xl:max-w-screen-xl lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[640px] max-w-[1024px] mx-auto px-[20px] flex flex-col py-[3rem] md:pt-[2rem]
   }
-
   .layout{
     @apply 2xl:max-w-screen-xl lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[640px] max-w-[1024px] ml-auto mr-auto pl-[20px] pr-[20px] flex flex-col py-[6rem] md:py-[8rem]
-  }
-  .radial-bg{
-    @apply absolute inset-0 w-full h-full bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#ffffff3e_70%,transparent_100%)]
-  }
-  .square-bg{
-    @apply absolute inset-0 w-full h-full [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#ffffff3e_160%,transparent_190%)] opacity-40
-  }
-  .gradient-bg{
-    @apply absolute inset-0 h-full w-full [background:radial-gradient(125%_180%_at_50%_20%,#000_40%,#63e_100%)] -z-10
-  }
-  .line{
-    @apply relative
-  }
-  .line::after{
-    @apply content-[""] w-[100%] h-[5px] md:h-[8px] bg-[steelblue] absolute bottom-0 left-0
-  }
-  nav{
-    @apply flex justify-between h-[80px] items-center
-  }
-  .left{
-    @apply flex-[3] flex justify-between items-center gap-[20px]
-  }
-  .logo{
-    @apply flex flex-[2] items-center text-[20px]
-  }
-  .middle{
-    @apply flex-[3] items-center flex justify-center
-  }
-  .right{
-    @apply flex-[1] flex justify-end items-center gap-x-5
-  }
-  .custombtn{
-    @apply flex bg-gradient-to-b from-zinc-900 to-zinc-900/10 px-4 h-9 items-center text-[15px] md:text-[13px] lg:text-sm rounded-[3px] ring-1 ring-zinc-50/5 bg-zinc-50/5 hover:bg-zinc-50/10 tracking-wider transition-all font-bold hover:text-white
-  }
-  .navbar{
-    @apply absolute flex top-full mt-2 right-0 min-w-40 rounded-2xl scale-90 isolate blur-sm opacity-0 invisible transition-[opacity,transform,filter] md:static md:flex md:items-center md:mt-0 md:opacity-100 md:blur-0 md:visible md:scale-100 backdrop-blur-2xl
-  }
-  .nav-link{
-    @apply grid items-center h-9 px-4 text-[15px] md:text-[13px] lg:text-sm font-bold tracking-wider hover:text-white transition-colors rounded-[3px] 
-   }
-  .customBorder:nth-child(1){
-    @apply border-b md:border-b-0 md:border-r border-zinc-50/10
-  }
-  .customBorder:nth-child(2){
-    @apply border-b md:border-b-0 md:border-r border-zinc-50/10
-  }
-  .nlink{
-    @apply grid items-center h-9 text-[15px] md:text-[13px] lg:text-sm font-bold tracking-wider hover:text-white transition-colors rounded-[3px] 
   }
 }

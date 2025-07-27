@@ -17,9 +17,6 @@ export default {
 			"primary-gradient": "linear-gradient(to bottom, #B59CF8, #F5F2FF 48%, #B59CF8 68%, #8273A9 100%)",
 			frost: "repeating-linear-gradient(to right, rgba(255,255,255,.04) 10%, rgba(255,255,255,.05) 50%, rgba(255,255,255,.04) 80%)",
 		},
-		fontFamily: {
-			sans: 'var(--font-archivo)'
-		},
 		container: {
 			center: true,
 			padding: {

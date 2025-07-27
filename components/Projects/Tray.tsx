@@ -33,7 +33,7 @@ const Tray = ({ closeTray }: TrayProps) => {
         exit={{ opacity: 0 }}
         onClick={closeTray}
       ></motion.div>
-      <motion.div className="absolute bottom-0 inset-x-0 mx-auto w-full sm:w-[22rem] min-h-10 bg-white px-8 pb-6 overflow-hidden z-10"
+      <motion.div className="absolute bottom-0 inset-x-0 mx-auto w-full sm:w-[27rem] min-h-10 bg-neutral-900 border border-white/10 px-8 pb-6 overflow-hidden z-10"
         style={{ borderTopLeftRadius: 7, borderTopRightRadius: 7, y: dragY }}
         initial={{ y: "100%" }}
         animate={{ y: 0 }}

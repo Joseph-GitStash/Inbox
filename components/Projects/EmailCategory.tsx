@@ -1,6 +1,7 @@
 'use client'
 
 import { emails } from '@/db/email';
+import image1 from '@/public/assets/images/hero-image.jpg'
 import {
   BriefcaseBusiness,
   Inbox,
@@ -14,11 +15,12 @@ import {
   UserRound,
   X,
 } from "lucide-react";
-import { AnimatePresence, motion, Reorder, useDragControls } from 'framer-motion';
+import { AnimatePresence, motion, Reorder, useAnimate } from 'framer-motion';
 import { RefObject, useEffect, useRef, useState } from "react";
 import { CategoryBadge } from './CategoryBadge';
 import Tray from './Tray';
 import CategoryList from './CategoryList';
+import Image from 'next/image';
 
 
 export const categories = [
@@ -56,6 +58,8 @@ export const categories = [
 
 
 const EmailCategory = () => {
+  const [sectionDesignScope, sectionDesignAnimate] = useAnimate()
+  
   const allEmails = emails;
   const [theEmails, setTheEmails] = useState(allEmails);
   const [trayOpen, setTrayOpen] = useState(false);
@@ -63,26 +67,56 @@ const EmailCategory = () => {
 
   const [activeCategory, setActiveCategory] = useState("primary")
 
+  useEffect(() => {
+      sectionDesignAnimate([
+          [sectionDesignScope.current, { opacity: 1 }, { duration: 0.6, delay: 0.7 }],
+          [sectionDesignScope.current, { y: 0  }, { duration: 0.6 }],
+      ]);
+      
+    }, [])
+
    useEffect(() => {
     setTheEmails(allEmails.filter((e) => e.category === activeCategory))
 
    }, [activeCategory])
 
-  return (
-    <section className='h-[80vh]'>
 
-      <AnimatePresence>
-        {trayOpen && <Tray closeTray={() => setTrayOpen(false)} />}
-      </AnimatePresence>
-      
-        <div className="layoutSect ">
+  return (
+    <motion.section className=''
+      ref={sectionDesignScope} 
+      // initial={{ opacity: 0, y: 100 }}
+    >
+        <motion.div 
+          initial={{ opacity: 0, y: 150 }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                transition:{
+                  duration: 0.8,
+                  ease:[0.44, 0, 0, 1],
+                },
+              }}
+              viewport={{
+                amount: "some",
+                once: false
+              }}
+          className="relative bg-neutral-900 overflow-hidden emailLayout border border-white/10 rounded-lg">
+        <div className="absolute hidden -z-10 inset-0 bg-[#00000061]"></div>
+        {/* <AnimatePresence>
+          {trayOpen && <Tray closeTray={() => setTrayOpen(false)} />}
+        </AnimatePresence> */}
             <div className="flex flex-col gap-7">
                 <div className="flex items-center gap-7 justify-between">
-                  <h1 className='tracking-tighter font-semibold text-5xl lg:text-6xl flex '>
-                      Inbox
-                  </h1>
-                  <Menu className='mt-2 cursor-pointer' 
-                    onClick={() => setTrayOpen(true)} />  
+                  <div className="flex items-center gap-2">
+                    <Image src={image1} alt='user image' 
+                    className='w-[30px] h-[30px] bg-cover rounded-full' />
+                    <h1 className='tracking-tighter text-xl flex '>
+                        Hi John Doe
+                    </h1>
+                  </div>
+                  <Menu className='mt-2' 
+                    // onClick={() => setTrayOpen(true)} 
+                  />  
                 </div>
                 <motion.div className="max-w-fit flex gap-2 md:gap-4 " layout>
                   {categories.map((category) => (
@@ -102,6 +136,26 @@ const EmailCategory = () => {
                   ))}
                 </motion.div>
                 
+                {/* <motion.div className=""
+                      key={activeCategory}
+                      initial={{ y: 100, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ opacity: 0, scale: 0.9, filter: "blur(8px)" }}
+                      // transition={{ 
+                      //   type: "spring", bounce: 0, duration: 0.5, delay: 0.4
+                      //  }}
+                >
+                  <Reorder.Group values={theEmails} onReorder={setTheEmails} 
+                    ref={wrapper}
+                  >
+                    {theEmails.map((email) => (
+                      <CategoryList 
+                      email={email} 
+                      wrapper={wrapper}/>
+                    ))} 
+                  </Reorder.Group>
+                </motion.div> */}
+                
                 <motion.div className=""
                       key={activeCategory}
                       initial={{ y: 100, opacity: 0 }}
@@ -111,22 +165,18 @@ const EmailCategory = () => {
                         type: "spring", bounce: 0, duration: 0.5, delay: 0.4
                        }}
                 >
-                  <Reorder.Group values={theEmails} onReorder={setTheEmails} 
-                    ref={wrapper}
-                  >
                     {theEmails.map((email) => (
                       <CategoryList 
                       email={email} 
                       key={email.id}
                       wrapper={wrapper}/>
                     ))} 
-                  </Reorder.Group>
                 </motion.div>
 
             </div>
-        </div>
+        </motion.div>
 
-    </section>
+    </motion.section>
   )
 }
 export default EmailCategory

@@ -1,16 +1,8 @@
 
 import { emails } from '@/db/email';
 import {
-  Inbox,
+  ArrowUpRight,
   LucideSquareArrowOutUpRight,
-  Mail,
-  Megaphone,
-  Menu,
-  MessageCircle,
-  MessageSquareText,
-  ShoppingCart,
-  UserRound,
-  X,
 } from "lucide-react";
 import { AnimatePresence, motion, Reorder, useDragControls, useMotionValue } from 'framer-motion';
 import { RefObject, useState } from "react";
@@ -18,11 +10,11 @@ import { RefObject, useState } from "react";
 const EmailDetails = ({
   getEmails,
   onClose,
-  closeTray,
+  closeEmailTray,
 }: {
   getEmails: (typeof emails)[0];
   onClose: () => void;
-  closeTray: () => void
+  closeEmailTray: () => void
 }) => {
    const controls = useDragControls()
    const dragY = useMotionValue(0)
@@ -30,7 +22,7 @@ const EmailDetails = ({
     return(
       
       <motion.div 
-        className="absolute bottom-0 inset-x-0 mx-auto w-full sm:w-[22rem] min-h-10 bg-white px-8 pb-6 shadow-lg p-6 cursor-pointer overflow-hidden rounded-t-md z-10"
+        className="absolute bottom-0 inset-x-0 mx-auto w-[22rem] h-[340px] bg-white px-8 pb-6 shadow-lg p-6 cursor-pointer overflow-hidden rounded-t-md z-10"
         initial={{ y: "100%" }}
         animate={{ y: 0 }}
         exit={{ y: "100%" }}
@@ -48,7 +40,7 @@ const EmailDetails = ({
         }}
         onDragEnd={() => {
           if(dragY.get() >= 100){
-            closeTray()
+            closeEmailTray()
           }
         }}
         
@@ -109,36 +101,43 @@ const CategoryList = ({
 
 
   return (
-    <section suppressHydrationWarning>
+    <section className=''>
 
-
-
-    <Reorder.Item 
-        value={email}
-        className="cursor-grab flex gap-1 py-3" 
-        dragConstraints={wrapper}
-        // dragElastic={1}
+    <div className="pointer-events-none flex gap-1 py-3 border border-white/10 bg-[#262626] my-4 px-2 rounded-lg" 
+       
     >
         <div className="flex flex-col flex-1" 
-        // onPointerDown={(e) => controls.start(e)}
         >
-            <h2 className="tracking-tighter text-[18px] font-semibold">{email.sender}</h2>
-            <h3 className='tracking-tighter'>{email.subject}</h3>
-            <p className="text-sm tracking-tight font-semibold">{email.description}</p>
+            <h2 className="tracking-tight mb-2 text-[17px]">{email.sender}</h2>
+            <h3 className={`
+              ${email.category === "primary"? "text-[#00aff]": 
+                email.category === "transactions"? "text-[#34759]": 
+                email.category === "updates"? "text-[#585d6]": 
+                                              "text-[#ff255]"}
+                tracking-tight mb-1 underline underline-offset-2 text-[18px]`}>
+              {email.subject}
+              </h3>
+            <p className="hidden lg:block text-[15px] ">
+              {email.description}
+            </p>
+            <p className="lg:hidden text-[15px] ">
+              {email.description.slice(0, 60) + '...'}
+            </p>
             </div>
-            {/* <div>
-                <LucideSquareArrowOutUpRight className='cursor-pointer' onClick={() => setSelectedEmail(email)} />
-        </div> */}
+            <div>
+                <LucideSquareArrowOutUpRight className='hidden cursor-pointer' onClick={() => setSelectedEmail(email)} />
+                <ArrowUpRight className='' />
+        </div>
                           
-    </Reorder.Item>
+    </div>
     
-        {selectedEmail && (
+        {selectedEmail &&(
           <AnimatePresence>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 exit={{ opacity: 0 }}
-                className="absolute h-full inset-0 bg-black "
+                className="absolute inset-0 bg-black "
                   onClick={() => setSelectedEmail(null)}
                   layout
               ></motion.div>
@@ -147,7 +146,7 @@ const CategoryList = ({
                     getEmails={selectedEmail}
                     onClose={() => setSelectedEmail(null)}
                     key={email.id}
-                    closeTray={() => setTrayOpen(false)}
+                    closeEmailTray={() => setTrayOpen(true)}
                 />
           </AnimatePresence>
                 
