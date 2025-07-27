@@ -1,22 +1,17 @@
 'use client'
 
 import { emails } from '@/db/email';
+import {useMediaQuery} from 'react-responsive'
 import image1 from '@/public/assets/images/hero-image.jpg'
 import {
   BriefcaseBusiness,
-  Inbox,
-  LucideSquareArrowOutUpRight,
-  Mail,
-  Megaphone,
   Menu,
-  MessageCircle,
   MessageSquareText,
   ShoppingCart,
   UserRound,
-  X,
 } from "lucide-react";
-import { AnimatePresence, motion, Reorder, useAnimate } from 'framer-motion';
-import { RefObject, useEffect, useRef, useState } from "react";
+import { motion, useAnimate } from 'framer-motion';
+import {  useEffect, useRef, useState } from "react";
 import { CategoryBadge } from './CategoryBadge';
 import Tray from './Tray';
 import CategoryList from './CategoryList';
@@ -65,6 +60,10 @@ const EmailCategory = () => {
   const [trayOpen, setTrayOpen] = useState(false);
   const wrapper = useRef(null)
 
+  const isWidth = useMediaQuery({
+    query: "(max-width: 320px)"
+  })
+
   const [activeCategory, setActiveCategory] = useState("primary")
 
   useEffect(() => {
@@ -105,7 +104,7 @@ const EmailCategory = () => {
                     // onClick={() => setTrayOpen(true)} 
                   />  
                 </div>
-                <motion.div className="max-w-fit flex gap-2 md:gap-4 " layout>
+                <motion.div className={`${isWidth && "hidden"} max-w-fit flex gap-2 md:gap-4 `} layout>
                   {categories.map((category) => (
                     <CategoryBadge 
                       isActive={activeCategory === category.name}
@@ -117,7 +116,7 @@ const EmailCategory = () => {
                       key={category.name}
                       
                     >
-                      <motion.div layout className="">{category.icon}</motion.div>
+                      <motion.div layout className="size-5">{category.icon}</motion.div>
                       <motion.span data-slot='label' className="text-[12px] md:text-sm tracking-tight font-semibold">{category.displayName}</motion.span>
                     </CategoryBadge>
                   ))}
